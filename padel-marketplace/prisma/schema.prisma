@@ -1,0 +1,89 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Racket {
+  id          String   @id @default(cuid())
+  title       String
+  brand       String
+  model       String
+  condition   String   // "new", "like_new", "good", "fair"
+  price       Float
+  description String
+  images      String[] // Array of Cloudinary URLs
+  weight      String?
+  shape       String?  // "round", "diamond", "teardrop"
+  featured    Boolean  @default(false)
+  sold        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([brand])
+  @@index([condition])
+  @@index([price])
+  @@index([featured])
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  brand       String
+  model       String
+  condition   String
+  askingPrice Float?
+  description String
+  images      String[]
+  status      String   @default("pending") // "pending", "approved", "rejected"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status])
+}
+
+model ContactRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  racketId  String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read])
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String   // bcrypt hashed
+  createdAt DateTime @default(now())
+}
+
+model SiteVisit {
+  id        String   @id @default(cuid())
+  page      String
+  userAgent String?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([page])
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
