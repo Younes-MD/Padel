@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { submissionSchema } from "@/lib/validators";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { apiSuccess, apiError, apiRateLimited } from "@/lib/api-helpers";
-
+export const dynamic = "force-dynamic";
 export async function POST(request: NextRequest) {
   try {
     // Rate limit: 3 submissions per hour per IP
