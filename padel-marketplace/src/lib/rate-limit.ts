@@ -4,9 +4,9 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 // Clean up expired entries every 5 minutes
 setInterval(() => {
   const now = Date.now();
-  for (const [key, value] of rateLimitMap.entries()) {
-    if (now > value.resetTime) rateLimitMap.delete(key);
-  }
+     for (const [key, value] of rateLimitMap.entries()) {
+       if (now > value.resetTime) rateLimitMap.delete(key);
+     }
 }, 5 * 60 * 1000);
 
 interface RateLimitConfig {
