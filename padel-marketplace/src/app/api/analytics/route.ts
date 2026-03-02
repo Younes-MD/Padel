@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { apiSuccess, apiError } from "@/lib/api-helpers";
-
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const now = new Date();
